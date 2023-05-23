@@ -67,7 +67,7 @@ RUN apk add --no-cache  \
     php82-pecl-imagick 
     RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \    
     php82-pecl-mcrypt \
-    php82-pecl-xmlrpc && \
+    php82-pecl-xmlrpc  \
  echo "**** configure nginx ****" && \
   echo 'fastcgi_param  HTTP_PROXY         ""; # https://httpoxy.org/' >> \
     /etc/nginx/fastcgi_params && \
