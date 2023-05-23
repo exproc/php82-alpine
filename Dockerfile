@@ -46,6 +46,7 @@ RUN \
     php82-fileinfo \
     php82-simplexml \
     php82-pecl-apcu \
+    php82-pecl-mailparse \
     php82-pecl-memcached \
     php82-pecl-redis \
     php82-pgsql \
@@ -70,7 +71,7 @@ RUN \
     php82-gettext \
     tftp-hpa \
     php82-pecl-imagick && \
-  echo "**** configure nginx ****" && \
+ echo "**** configure nginx ****" && \
   echo 'fastcgi_param  HTTP_PROXY         ""; # https://httpoxy.org/' >> \
     /etc/nginx/fastcgi_params && \
   echo 'fastcgi_param  PATH_INFO          $fastcgi_path_info; # http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_split_path_info' >> \
@@ -91,7 +92,8 @@ RUN \
   echo "**** fix logrotate ****" && \
   sed -i "s#/var/log/messages {}.*# #g" \
     /etc/logrotate.conf && \
-  sed -i 's#/usr/sbin/logrotate /etc/logrotate.conf#/usr/sbin/logrotate /etc/logrotate.conf -s /config/log/logrotate.status#g' /etc/periodic/daily/logrotate
+  sed -i 's#/usr/sbin/logrotate /etc/logrotate.conf#/usr/sbin/logrotate /etc/logrotate.conf -s /config/log/logrotate.status#g' \
+    /etc/periodic/daily/logrotate
    
 COPY root/ /
 ENTRYPOINT ["/init"] 
@@ -99,4 +101,4 @@ ENTRYPOINT ["/init"]
 
 #VOLUME /config
 
-EXPOSE 80 443 69/udp
+EXPOSE 80 443 
