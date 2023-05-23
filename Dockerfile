@@ -100,4 +100,4 @@ ENTRYPOINT ["/init"]
 
 #VOLUME /config
 
-EXPOSE 80 443 
+EXPOSE 80 443 69/udp
