@@ -63,8 +63,7 @@ RUN \
     php82-fpm\
     openssl \
     logrotate \
-    nginx && \
-    apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    nginx  \
     php82-pecl-mcrypt \
     php82-pecl-xmlrpc \
     php82-gettext \
