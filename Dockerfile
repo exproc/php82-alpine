@@ -46,7 +46,6 @@ RUN \
     php82-fileinfo \
     php82-simplexml \
     php82-pecl-apcu \
-    php82-pecl-mailparse \
     php82-pecl-memcached \
     php82-pecl-redis \
     php82-pgsql \
