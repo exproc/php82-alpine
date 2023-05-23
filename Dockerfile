@@ -15,9 +15,7 @@ ENV PS1="$(whoami)@$(hostname):$(pwd)\\$ " \
   VIRTUAL_ENV=/lsiopy \
   PATH="/lsiopy/bin:$PATH"
 
-RUN \
-  echo "**** install runtime packages ****" && \
-  apk add --no-cache  \
+RUN apk add --no-cache  \
     s6 \
     s6-overlay \
     openssl \
@@ -68,8 +66,8 @@ RUN \
     php82-pecl-xmlrpc \
     php82-gettext \
     tftp-hpa \
-    php82-pecl-imagick 
- RUN echo "**** configure nginx ****" && \
+    php82-pecl-imagick \
+ echo "**** configure nginx ****" && \
   echo 'fastcgi_param  HTTP_PROXY         ""; # https://httpoxy.org/' >> \
     /etc/nginx/fastcgi_params && \
   echo 'fastcgi_param  PATH_INFO          $fastcgi_path_info; # http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_split_path_info' >> \
@@ -78,10 +76,9 @@ RUN \
     /etc/nginx/fastcgi_params && \
   echo 'fastcgi_param  SERVER_NAME        $host; # Send HTTP_HOST as SERVER_NAME. If HTTP_HOST is blank, send the value of server_name from nginx (default is `_`)' >> \
     /etc/nginx/fastcgi_params && \
-  rm -f /etc/nginx/conf.d/stream.conf && \
   rm -f /etc/nginx/http.d/default.conf && \
   echo "**** configure php ****" && \
-  sed -i "s#;error_log = log/php82/error.log.*#error_log = /config/log/php/error.log#g" \
+  sed -i "s#;error_log = log/php81/error.log.*#error_log = /config/log/php/error.log#g" \
     /etc/php82/php-fpm.conf && \
   sed -i "s#user = nobody.*#user = abc#g" \
     /etc/php82/php-fpm.d/www.conf && \
@@ -91,7 +88,9 @@ RUN \
   sed -i "s#/var/log/messages {}.*# #g" \
     /etc/logrotate.conf && \
   sed -i 's#/usr/sbin/logrotate /etc/logrotate.conf#/usr/sbin/logrotate /etc/logrotate.conf -s /config/log/logrotate.status#g' \
-  /etc/periodic/daily/logrotate  
+    /etc/periodic/daily/logrotate
+   
+
 COPY root/ /
 ENTRYPOINT ["/init"] 
 # ports and volumes
